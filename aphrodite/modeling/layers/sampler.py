@@ -302,7 +302,7 @@ def _apply_penalties(logits: torch.Tensor, prompt_tokens_tensor: torch.Tensor,
 
     # We follow the definition in OpenAI API.
     # Refer to https://platform.openai.com/docs/api-reference/parameter-details
-    logits -= frequency_penalties.unsqueeze_(dim=1) * output_bin_counts
+    logits -= frequency_penalties.unsqueeze_(dim=1) * torch.sqrt(output_bin_counts)
     logits -= presence_penalties.unsqueeze_(dim=1) * output_mask
     return logits
 
